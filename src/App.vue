@@ -1,12 +1,24 @@
 <template>
-  <router-link to="/">123</router-link>
-  <router-link to="/hello">hello</router-link>
   <router-view></router-view>
 </template>
 
-<script>
-
+<script lang="ts">
+import {ref,provide} from "vue"
+import router from './router';
   export default {
     name: 'App',
+    setup(){
+      const width = document.documentElement.clientWidth;
+      const menuVisible = ref(width <= 500 ? false : true);
+      provide("menuVisible", menuVisible);
+      router.afterEach(() => {
+        if (width <= 500) {
+          menuVisible.value = false;
+        }
+      });
+    }
   }
 </script>
+<style lang="scss">
+@import "./assets/index.scss";
+</style>
